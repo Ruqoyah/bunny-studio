@@ -23,6 +23,7 @@
     "path": "^0.12.7",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-js-pagination": "^3.0.3",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",
@@ -52,7 +53,7 @@
     "build": "NODE_ENV=production babel server -d dist && webpack --progress --config ./webpack.config.prod.js",
     "heroku-postbuild": "NODE_ENV=production && npm run build",
     "start": "node dist/index.js",
-    "build:css": "tailwind build client/src/styles/index.css -o client/public/tailwind/style.css"
+    "build:css": "tailwind build client/public/styles/index.css -o client/public/tailwind/style.css"
   },
   "eslintConfig": {
     "extends": [

@@ -1,0 +1,65 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.cus-font {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+}
+
+.nav-active {
+    color: #ed7d2b;
+}
+
+.plus{
+    transition: all 0.1s ease-in-out;
+    position: fixed;
+    bottom: 5%;
+    right: 0;
+}
+
+.plus:hover {
+    transform: scale(1.05);
+}
+
+.tasks {
+    height: 70vh;
+    overflow: scroll;
+}
+
+/* RPagination */
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-color: #c1c1c1;
+    background-color: #fff;
+  }
+  
+  .pagination li.active a {
+    background-color: #dd4f05;
+    color: #fff;
+  }
+  
+  .pagination li a {
+    font-size: 12px;
+    color: #212529;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    text-decoration: none;
+    position: relative;
+    display: block;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+  }
+  
+  .custom-paginate .active:after {
+        content: initial !important;
+  }
+  /* RPagination Ends */
