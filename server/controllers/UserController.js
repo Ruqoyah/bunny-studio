@@ -31,7 +31,7 @@ class UserController {
             res.status(201).json({
               status: true,
               message: 'You have successfully added a user',
-              data: { token, role: user.role, email: user.email }
+              data: { role: user.role, email: user.email }
             });
           })
           .catch(() => res.status(500).json({
@@ -69,6 +69,37 @@ class UserController {
         });
       });
   }
+
+  /** Modify User
+  *
+  * @param  {object} req - request
+  *
+  * @param  {object} res - response
+  *
+  */
+ static updateUser(req, res) {
+  Users
+    .findOne({
+      where: {
+        id: req.params.userId
+      }
+    })
+    .then(user => user
+      .update({
+        name: req.body.name || task.name,
+        email: req.body.email || task.email,
+      })
+      .then((editedUser) => {
+        editedUser.reload().then(result => res.status(200).json({
+          status: true,
+          message: 'User modified successfully!',
+          data: result
+        }));
+      }))
+    .catch((error) => res.status(500).json({
+      error
+    }));
+}
 
 
   /** Delete User
@@ -160,7 +191,8 @@ class UserController {
           return res.status(200).json({
             status: true,
             users: users.rows.map(user => omit(user.dataValues, ['password'])),
-            pages
+            pages,
+            count: users.count
           });
         })
         .catch((error) => res.status(500).json({

@@ -5,7 +5,8 @@ import {
     validateUser,
     validateLoginUser,
     validateSuperAdmin,
-    checkUpdateRoleInput
+    checkUpdateRoleInput,
+    checkUpdateInput
   } from '../middleware/validations';
 import authentication from '../middleware/authentication';
 const app = express.Router();
@@ -17,6 +18,7 @@ const app = express.Router();
  */
 app.post(
     '/api/users/signup', 
+    authentication.authenticate,
     validateSuperAdmin,
     validateUser,
     UserController.addUser
@@ -43,8 +45,20 @@ app.delete(
     UserController.deleteUser
 );
 
-/** update user role
+/** update user
  * @param  {} '/api/users/:userId'
+ * @param  {} UserController.updateUserRole
+ */
+app.put(
+    '/api/users/:userId',
+    authentication.authenticate,
+    validateSuperAdmin,
+    checkUpdateInput,
+    UserController.updateUser
+);
+
+/** update user role
+ * @param  {} '/api/users/role'
  * @param  {} UserController.updateUserRole
  */
 app.put(

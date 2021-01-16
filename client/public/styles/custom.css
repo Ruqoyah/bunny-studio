@@ -63,3 +63,14 @@ body {
         content: initial !important;
   }
   /* RPagination Ends */
+
+  .custom-toast {
+	background-color:#DD4F05 !important;
+	color: #ffff !important;
+	font-size: 12px;
+	padding: 5% 8% !important;
+}
+
+.custom-toast .Toastify__close-button--default {
+	color: #ffff !important;
+}

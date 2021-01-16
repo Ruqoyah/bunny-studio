@@ -67,6 +67,32 @@ export const checkUpdateRoleInput = (req, res, next) => {
   next();
 };
 
+  /** Check user input
+ *
+ * @param  {object} req - request
+ *
+ * @param  {object} res - response
+ *
+ * @param  {object} next - next
+ *
+ */
+
+export const checkUpdateInput = (req, res, next) => {
+  if (!req.body.email) {
+    return res.status(400).json({
+      status: false,
+      message: 'Enter email'
+    });
+  }
+  if (!req.body.name) {
+    return res.status(400).json({
+      status: false,
+      message: 'Enter Name'
+    });
+  }
+  next();
+};
+
 
   /** Check if login user is a super admin
  *

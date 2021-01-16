@@ -117,11 +117,12 @@ class TaskController {
           }],
         })
         .then((tasks) => {
-          const pages = Math.ceil(galleries.count / limit);
+          const pages = Math.ceil(tasks.count / limit);
           return res.status(200).json({
             status: true,
             tasks,
-            pages
+            pages,
+            count: tasks.count
           });
         })
         .catch((error) => res.status(500).json({

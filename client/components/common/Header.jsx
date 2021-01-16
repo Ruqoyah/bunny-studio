@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { setAuthorizationToken } from '../../helper'
 
 class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {}
     }
+
+    logout = () => {
+        setAuthorizationToken(false);
+        localStorage.removeItem('token')
+        window.location = '/'
+    }
+
     render() {
         const { location } = this.props;
         return (
@@ -27,7 +35,7 @@ class Header extends Component {
                                 <NavLink to="/users" activeClassName="nav-active" className="mr-8">
                                    <p>Users</p>
                                 </NavLink>
-                                <p className="cursor-pointer">Logout</p>
+                                <p className="cursor-pointer" onClick={this.logout}>Logout</p>
                                 </div>
                             </div>
                     }
