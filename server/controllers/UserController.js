@@ -65,7 +65,7 @@ class UserController {
         res.status(200).json({
           status: true,
           message: 'You have successfully signed in!',
-          data: { token, role: user.role, email: user.email }
+          data: { token, role: user.role, email: user.email, userId: user.id }
         });
       });
   }

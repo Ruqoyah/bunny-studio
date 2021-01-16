@@ -69,7 +69,8 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin([
-      'SUPER_SECRET'
+      'SUPER_SECRET',
+      'API_URL'
     ]),
     new webpack.ProvidePlugin({
       "$": 'jquery',

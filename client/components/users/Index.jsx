@@ -26,8 +26,14 @@ class Users extends Component {
         password: '',
         cpassword: ''
       },
+      userUpdate: {
+        name:  '',
+        email: ''
+      }
     }
   }
+
+ 
 
   toggleModal = (event, userId) => {
     if (userId) {
@@ -40,7 +46,7 @@ class Users extends Component {
 
   editToggleModal = (event, userUpdate) => {
     if (userUpdate) {
-      this.setState((prev) => ({ 
+      this.setState((prev) => ({
         ...prev,
         userUpdate: {
           ...prev.userUpdate,
@@ -65,14 +71,14 @@ class Users extends Component {
   };
 
   getUsers = (pageNumber) => {
-    request(`api/users?limit=15&page=${pageNumber}`)
-    .then(data => {
-      this.setState((prev) => ({
-        ...prev,
-        loading: false,
-        data
-      }))
-    })
+    request(`users?limit=15&page=${pageNumber}`)
+      .then(data => {
+        this.setState((prev) => ({
+          ...prev,
+          loading: false,
+          data
+        }))
+      })
   }
 
   componentDidMount() {
@@ -80,7 +86,7 @@ class Users extends Component {
       ...prev,
       loading: true
     }))
-   this.getUsers(this.state.activePage)
+    this.getUsers(this.state.activePage)
   }
 
   handlePageChange = (pageNumber) => {
@@ -114,6 +120,18 @@ class Users extends Component {
     }))
   }
 
+  reset = () => {
+    this.setState((prev) => ({
+      user: {
+        ...prev.user,
+        email: '',
+        name: '',
+        password: '',
+        cpassword: ''
+      }
+    }))
+  }
+
   onSubmit = (event) => {
     event.preventDefault()
     const { email, password, name, cpassword } = this.state.user;
@@ -137,14 +155,17 @@ class Users extends Component {
         loading: true
       }))
 
-      request('api/users/signup', this.state.user, 'post')
+      request('users/signup', this.state.user, 'post')
         .then((res) => {
           this.setState((prev) => ({
             ...prev,
             loading: false
           }))
-          this.addUserToggleModal(event)
-          this.getUsers(this.state.activePage)
+
+          this.reset();
+
+          this.addUserToggleModal(event);
+          this.getUsers(this.state.activePage);
         })
         .catch((error) => {
           this.setState((prev) => ({
@@ -176,7 +197,7 @@ class Users extends Component {
       loading: true
     }))
 
-    request(`api/users/${this.state.userUpdate.id}`, this.state.userUpdate, 'put')
+    request(`users/${this.state.userUpdate.id}`, this.state.userUpdate, 'put')
       .then((res) => {
         this.setState((prev) => ({
           ...prev,
@@ -199,7 +220,7 @@ class Users extends Component {
       ...prev,
       disableBtn: true
     }))
-    request(`api/users/${this.state.userId}`, null, 'delete')
+    request(`users/${this.state.userId}`, null, 'delete')
       .then(() => {
         this.setState((prev) => ({
           ...prev,
@@ -287,15 +308,16 @@ class Users extends Component {
 
 
   render() {
-    const { 
-      disableBtn, 
-      activePage, 
-      data, 
-      loading, 
-      validationRes, 
-      passwordConfirmError, 
+    const {
+      disableBtn,
+      activePage,
+      data,
+      loading,
+      validationRes,
+      passwordConfirmError,
       error,
-      userUpdate
+      userUpdate,
+      user
     } = this.state;
     return (
       <div>
@@ -327,7 +349,7 @@ class Users extends Component {
                       onClick={(event) =>
                         this.toggleModal(event, user.id)
                       }>Delete</button>
-                    <Link to="/tasks">
+                    <Link to={`/users/${user.id}/tasks`}>
                       <button className="bg-primaryOrange text-white rounded-full py-2 md:px-4 cursor-pointer w-16 md:w-24 focus:outline-none mt-2 lg:mt-0">Task(s)</button>
                     </Link>
                   </div>
@@ -357,6 +379,7 @@ class Users extends Component {
           onBlur={this.onBlur}
           passwordConfirmError={passwordConfirmError}
           error={error}
+          user={user}
         />
         <UpdateUser
           editToggleModal={this.editToggleModal}

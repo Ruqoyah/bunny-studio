@@ -15,7 +15,7 @@ class Header extends Component {
     }
 
     render() {
-        const { location } = this.props;
+        const { location, userId } = this.props;
         return (
             <div className="header-wrapper absolute w-full px-10 md:px-16 xl:px-32">
 
@@ -24,7 +24,7 @@ class Header extends Component {
                         {
                             location.pathname === '/' ? null :
                                 <div className="w-24 md:w-32">
-                                    <Link to="/"> <img src="images/bunny-studio.png" alt="logo" /></Link>
+                                    <Link to="/"> <img src="/images/bunny-studio.png" alt="logo" /></Link>
                                 </div>
                         }
                     </div>
@@ -32,10 +32,19 @@ class Header extends Component {
                         ((location.pathname === '/login') || (location.pathname === '/signup')) ? null :
                             <div className="text-right flex-initial font-bold text-gray-600">
                                 <div className="flex">
-                                <NavLink to="/users" activeClassName="nav-active" className="mr-8">
-                                   <p>Users</p>
-                                </NavLink>
-                                <p className="cursor-pointer" onClick={this.logout}>Logout</p>
+                                    {
+                                        localStorage.getItem('role') === 'super-admin' &&
+                                        <NavLink exact to="/users" activeClassName="nav-active" className="mr-8">
+                                            <p>Users</p>
+                                        </NavLink>
+                                    }
+                                    {
+                                        localStorage.getItem('role') === 'basic' &&
+                                        <NavLink exact to={`/users/${userId}/tasks`} activeClassName="nav-active" className="mr-8">
+                                            <p>Tasks</p>
+                                        </NavLink>
+                                    }
+                                    <p className="cursor-pointer" onClick={this.logout}>Logout</p>
                                 </div>
                             </div>
                     }

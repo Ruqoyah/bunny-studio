@@ -8,7 +8,8 @@ const AddUser = ({
   validationRes, 
   onBlur,
   passwordConfirmError,
-  error
+  error,
+  user
 }) => (
   <div className="z-50 addUserModal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
     <div
@@ -45,6 +46,7 @@ const AddUser = ({
               name="name"
               onChange={onChange}
               onFocus={onFocus}
+              value={user.name}
             />
             {validationRes && validationRes.name ? (
               <p className="text-red-500 text-left text-sm italic mt-2">
@@ -58,6 +60,7 @@ const AddUser = ({
               name="email" 
               onChange={onChange}
               onFocus={onFocus}
+              value={user.email}
             />
             {validationRes && validationRes.email ? (
               <p className="text-red-500 text-left text-sm italic mt-2">
@@ -71,6 +74,7 @@ const AddUser = ({
               name="password"
               onChange={onChange}
               onFocus={onFocus}
+              value={user.password}
             />
              {validationRes && validationRes.password ? (
               <p className="text-red-500 text-left text-sm italic mt-2">
@@ -85,6 +89,7 @@ const AddUser = ({
               onChange={onChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              value={user.cpassword}
             />
              {validationRes && validationRes.cpassword ? (
               <p className="text-red-500 text-left text-sm italic mt-2">

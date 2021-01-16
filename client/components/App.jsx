@@ -17,7 +17,7 @@ class App extends Component {
             <Route exact path="/" component={(Homepage)} />
             <Route exact path="/login" component={(Login)} />
             <Route exact path="/users" component={Authenticate(Users)} />
-            <Route exact path="/tasks" component={Authenticate(Tasks)} />
+            <Route exact path="/users/:userId/tasks" component={Authenticate(Tasks)} />
           </Switch>
         </Router>
       </div>

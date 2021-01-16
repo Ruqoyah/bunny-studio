@@ -63,28 +63,28 @@ class TaskController {
   * @param  {object} res - response
   *
   */
- static updateTaskStatus(req, res) {
-  Tasks
-    .findOne({
-      where: {
-        id: req.params.taskId
-      }
-    })
-    .then(task => task
-      .update({
-        status: req.body.status || task.status
+  static updateTaskStatus(req, res) {
+    Tasks
+      .findOne({
+        where: {
+          id: req.params.taskId
+        }
       })
-      .then((editedTask) => {
-        editedTask.reload().then(result => res.status(200).json({
-          status: true,
-          message: 'Task Status updated successfully!',
-          data: result
-        }));
-      }))
-    .catch((error) => res.status(500).json({
-      error
-    }));
-}
+      .then(task => task
+        .update({
+          status: req.body.status || task.status
+        })
+        .then((editedTask) => {
+          editedTask.reload().then(result => res.status(200).json({
+            status: true,
+            message: 'Task Status updated successfully!',
+            data: result
+          }));
+        }))
+      .catch((error) => res.status(500).json({
+        error
+      }));
+  }
 
 
   /** Get Tasks
@@ -156,19 +156,39 @@ class TaskController {
     *
     */
   static getUserTasks(req, res) {
-    return Tasks
-      .findAll({
-        where: {
-          user_id: req.params.userId
-        }
-      })
-      .then(result => res.status(200).json({
-        status: true,
-        data: result
-      }))
-      .catch((error) => res.status(500).json({
-        error
-      }));
+    const { query } = req;
+    if (query.status) {
+      Tasks
+        .findAll({
+          order: [['createdAt', 'DESC']],
+          where: {
+            user_id: req.params.userId,
+            status: query.status
+          }
+        })
+        .then(result => res.status(200).json({
+          status: true,
+          data: result
+        }))
+        .catch((error) => res.status(500).json({
+          error
+        }));
+    } else {
+      return Tasks
+        .findAll({
+          order: [['createdAt', 'DESC']],
+          where: {
+            user_id: req.params.userId
+          }
+        })
+        .then(result => res.status(200).json({
+          status: true,
+          data: result
+        }))
+        .catch((error) => res.status(500).json({
+          error
+        }));
+    }
   }
 }
 

@@ -1,27 +1,27 @@
 import React from 'react';
 
-const UpdateUser = ({
-  editToggleModal,
-  onUpdate,
-  validationRes,
+const UpdateTask = ({
+  updateTaskToggleModal,
+  onChange,
+  onSubmit,
   onFocus,
-  userUpdate,
-  onChangeUpdate,
-  error
+  validationRes,
+  error,
+  taskUpdate
 }) => (
-  <div className="z-50 editModal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+  <div className="z-50 updateTaskModal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
     <div
-      onClick={(event) => editToggleModal(event, null)}
+      onClick={(event) => updateTaskToggleModal(event, null)}
       className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"
     ></div>
     <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
       <div className="modal-content text-left">
-        <div className="flex justify-between items-center py-4 px-6 bg-primaryBlue mb-3 text-white">
+        <div className="flex justify-between items-center py-4 px-6 bg-gray-600 mb-3 text-white">
           <p className="text-xl">
-            Update User
-                        </p>
+            Update Task
+        </p>
           <div
-            onClick={(event) => editToggleModal(event, null)}
+            onClick={(event) => updateTaskToggleModal(event, null)}
             className="modal-close cursor-pointer z-50"
           >
             <svg
@@ -36,33 +36,36 @@ const UpdateUser = ({
           </div>
         </div>
         <div className="px-8 pb-6">
-          <form className="text-center" onSubmit={onUpdate}>
+          <form
+            className="text-center"
+            onSubmit={onSubmit}
+          >
             <input
               className="p-2 md:p-3 bg-gray-200 w-full mt-2 md:mt-4"
               type="text"
-              placeholder="Full Name"
-              name="name"
-              value={userUpdate && userUpdate.name && userUpdate.name}
-              onChange={onChangeUpdate}
+              placeholder="Title"
+              name="title"
+              onChange={onChange}
               onFocus={onFocus}
+              value={taskUpdate && taskUpdate.title && taskUpdate.title}
             />
-            {validationRes && validationRes.name ? (
+            {validationRes && validationRes.title ? (
               <p className="text-red-500 text-left text-sm italic mt-2">
-                {validationRes.name}
+                {validationRes.title}
               </p>
             ) : null}
-            <input 
-              className="p-2 md:p-3 bg-gray-200 w-full mt-2 md:mt-4" 
-              type="text" 
-              placeholder="Email" 
-              name="email"
-              value={userUpdate && userUpdate.email && userUpdate.email}
-              onChange={onChangeUpdate}
+            <textarea
+              className="p-2 md:p-3 bg-gray-200 w-full mt-2 md:mt-4"
+              type="text"
+              placeholder="Description"
+              name="description"
+              onChange={onChange}
               onFocus={onFocus}
+              value={taskUpdate && taskUpdate.description && taskUpdate.description}
             />
-            {validationRes && validationRes.email ? (
+            {validationRes && validationRes.description ? (
               <p className="text-red-500 text-left text-sm italic mt-2">
-                {validationRes.email}
+                {validationRes.description}
               </p>
             ) : null}
             {error ? (
@@ -70,7 +73,9 @@ const UpdateUser = ({
                 {error}
               </p>
             ) : null}
-            <button className="bg-primaryBlue w-full py-2 text-center text-white mt-3 md:text-lg hover:bg-blue-600">Update</button>
+            <button
+              className="bg-gray-600 w-full py-2 text-center text-white mt-3 md:text-lg hover:bg-gray-700"
+            >Update</button>
           </form>
         </div>
       </div>
@@ -78,4 +83,4 @@ const UpdateUser = ({
   </div>
 )
 
-export default UpdateUser;
+export default UpdateTask;

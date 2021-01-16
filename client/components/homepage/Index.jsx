@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Homepage extends Component {
+    componentDidMount() {
+        if (localStorage.getItem('token')) {
+          if(localStorage.getItem('role') === 'super-admin') {
+            this.props.history.push('/users');
+          } else {
+            this.props.history.push('/tasks');
+          }
+        }
+      }
     render() {
         return (
             <div>

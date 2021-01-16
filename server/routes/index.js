@@ -117,7 +117,7 @@ app.put(
  * @param  {} TaskController.updateTask
  */
 app.put(
-    '/api/tasks/:taskId',
+    '/api/tasks/:taskId/status',
     authentication.authenticate,
     TaskController.updateTaskStatus
 );

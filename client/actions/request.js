@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+axios.defaults.baseURL = process.env.API_URL;
+
 export default (route, data = {}, method = 'get', config) => {
 
   const promise = new Promise(async (resolve, reject) => {

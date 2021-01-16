@@ -24,7 +24,7 @@ class Login extends Component {
       if(localStorage.getItem('role') === 'super-admin') {
         this.props.history.push('/users');
       } else {
-        this.props.history.push('/tasks');
+        this.props.history.push(`/users/${this.state.userId}/tasks`);
       }
     }
   }
@@ -59,11 +59,12 @@ class Login extends Component {
       loading: true
     }))
 
-    request('api/users/signin', this.state.user, 'post')
+    request('users/signin', this.state.user, 'post')
       .then((res) => {
         this.setState((prev) => ({
           ...prev,
-          loading: false
+          loading: false, 
+          userId: res.data.userId
         }))
 
         setAuthorizationToken(res.data.token)
@@ -73,7 +74,7 @@ class Login extends Component {
         if(res.data.role ===  'super-admin') {
           this.props.history.push('/users')
         } else {
-          this.props.history.push('/tasks')
+          this.props.history.push(`/users/${res.data.userId}/tasks`)
         }
       })
       .catch((error) => {

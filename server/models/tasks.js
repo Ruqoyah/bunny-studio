@@ -2,8 +2,7 @@ export default (sequelize, DataTypes) => {
     const Tasks = sequelize.define('Tasks', {
       title: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       description: {
         type: DataTypes.STRING,
