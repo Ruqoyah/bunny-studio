@@ -5,7 +5,8 @@ import Homepage from './homepage/Index';
 import Login from './authentication/Login';
 import Users from './users/Index';
 import Tasks from './tasks/Index';
-import Authenticate from './middleware/Authenticate'
+import Authenticate from './middleware/Authenticate';
+import PageNotFound from './notFoundPage/Index'
 
 class App extends Component {
 
@@ -18,6 +19,7 @@ class App extends Component {
             <Route exact path="/login" component={(Login)} />
             <Route exact path="/users" component={Authenticate(Users)} />
             <Route exact path="/users/:userId/tasks" component={Authenticate(Tasks)} />
+            <Route path="/*"component={PageNotFound} />
           </Switch>
         </Router>
       </div>

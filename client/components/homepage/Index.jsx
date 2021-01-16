@@ -7,7 +7,7 @@ class Homepage extends Component {
           if(localStorage.getItem('role') === 'super-admin') {
             this.props.history.push('/users');
           } else {
-            this.props.history.push('/tasks');
+            this.props.history.push(`/users/${localStorage.getItem('userId')}/tasks`);
           }
         }
       }

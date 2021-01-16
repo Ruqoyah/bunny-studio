@@ -82,6 +82,13 @@ class Users extends Component {
   }
 
   componentDidMount() {
+    if (localStorage.getItem('token')) {
+      if(localStorage.getItem('role') === 'super-admin') {
+        this.props.history.push('/users');
+      } else {
+        this.props.history.push(`/users/${localStorage.getItem('userId')}/tasks`);
+      }
+    }
     this.setState((prev) => ({
       ...prev,
       loading: true
