@@ -6,7 +6,8 @@ import webpack from 'webpack';
 import winston from 'winston';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.config.dev';
-import './config/database';
+import routes from './routes';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(routes);
 
 app.use(express.static(path.resolve(__dirname, '../client/public/')));
 app.use(bodyParser.urlencoded({ extended: false }));
