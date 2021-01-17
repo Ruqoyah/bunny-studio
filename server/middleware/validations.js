@@ -35,6 +35,35 @@ export const validateUser = (req, res, next) => {
       });
   };
 
+  /** Validate that you can't edit or delete super admin
+ *
+ * @param  {object} req - request
+ *
+ * @param  {object} res - response
+ *
+ * @param  {object} next - next
+ *
+ */
+
+export const validateSuperAdminEditOrDelete = (req, res, next) => {
+  Users
+    .findOne({
+      where: {
+        id: req.params.userId
+      },
+    })
+    .then((user) => {
+      if (user.role == 'super-admin') {
+        return res.status(409).json({
+          status: false,
+          message: 'You cannot delete or edit this user'
+        });
+      } else {
+          next();
+      }
+    });
+};
+
   /** Check if email is passed
  *
  * @param  {object} req - request

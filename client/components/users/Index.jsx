@@ -27,13 +27,13 @@ class Users extends Component {
         cpassword: ''
       },
       userUpdate: {
-        name:  '',
+        name: '',
         email: ''
       }
     }
   }
 
- 
+
 
   toggleModal = (event, userId) => {
     if (userId) {
@@ -83,7 +83,7 @@ class Users extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('token')) {
-      if(localStorage.getItem('role') === 'super-admin') {
+      if (localStorage.getItem('role') === 'super-admin') {
         this.props.history.push('/users');
       } else {
         this.props.history.push(`/users/${localStorage.getItem('userId')}/tasks`);
@@ -340,41 +340,47 @@ class Users extends Component {
 
           {
             loading ? <Loading /> :
+              data && data.users.length < 1 ?
+                <div className="text-center my-24 text-2xl"> No users yet</div> :
+                <div>
+                  {
+                    data && data.users.map(user => (
+                      <div className="block md:flex border rounded p-4 mt-4 shadow-lg items-center" key={user.id}>
+                        <label className="font-bold block md:hidden">Name:</label>
+                        <div className="flex-initial w-full md:w-1/4 break-words mb-3 md:mb-0">{user.name}</div>
+                        <label className="font-bold block md:hidden">Email:</label>
+                        <div className="flex-initial w-full md:w-1/3 break-words mb-3 md:mb-0">{user.email}</div>
+                        <div className="flex-initial w-full md:w-5/12 text-sm md:text-base">
+                          <button className="bg-primaryBlue text-white rounded-full py-2 md:px-4 cursor-pointer w-16 md:w-24 focus:outline-none mr-2"
+                            onClick={(event) =>
+                              this.editToggleModal(event, user)
+                            }>Update</button>
+                          <button className="bg-red-600 text-white rounded-full py-2 md:px-4 cursor-pointer w-16 md:w-24 focus:outline-none mr-2 mt-2 lg:mt-0"
+                            onClick={(event) =>
+                              this.toggleModal(event, user.id)
+                            }>Delete</button>
+                          <Link to={`/users/${user.id}/tasks`}>
+                            <button className="bg-primaryOrange text-white rounded-full py-2 md:px-4 cursor-pointer w-16 md:w-24 focus:outline-none mt-2 lg:mt-0">Task(s)</button>
+                          </Link>
+                        </div>
+                      </div>
+                    ))
+                  }
 
-              data && data.users.map(user => (
-                <div className="block md:flex border rounded p-4 mt-4 shadow-lg items-center" key={user.id}>
-                  <label className="font-bold block md:hidden">Name:</label>
-                  <div className="flex-initial w-full md:w-1/4 break-words mb-3 md:mb-0">{user.name}</div>
-                  <label className="font-bold block md:hidden">Email:</label>
-                  <div className="flex-initial w-full md:w-1/3 break-words mb-3 md:mb-0">{user.email}</div>
-                  <div className="flex-initial w-full md:w-5/12 text-sm md:text-base">
-                    <button className="bg-primaryBlue text-white rounded-full py-2 md:px-4 cursor-pointer w-16 md:w-24 focus:outline-none mr-2"
-                      onClick={(event) =>
-                        this.editToggleModal(event, user)
-                      }>Update</button>
-                    <button className="bg-red-600 text-white rounded-full py-2 md:px-4 cursor-pointer w-16 md:w-24 focus:outline-none mr-2 mt-2 lg:mt-0"
-                      onClick={(event) =>
-                        this.toggleModal(event, user.id)
-                      }>Delete</button>
-                    <Link to={`/users/${user.id}/tasks`}>
-                      <button className="bg-primaryOrange text-white rounded-full py-2 md:px-4 cursor-pointer w-16 md:w-24 focus:outline-none mt-2 lg:mt-0">Task(s)</button>
-                    </Link>
+                  <div className="my-16 md:my-24">
+                    {
+                      data && <Paginate
+                        totalData={data.count}
+                        perPage={15}
+                        handlePageChange={this.handlePageChange}
+                        activePage={activePage}
+                        dataCount={data.pages}
+                      />
+                    }
                   </div>
                 </div>
-              ))
           }
 
-          <div className="my-16 md:my-24">
-            {
-              data && <Paginate
-                totalData={data.count}
-                perPage={15}
-                handlePageChange={this.handlePageChange}
-                activePage={activePage}
-                dataCount={data.pages}
-              />
-            }
-          </div>
         </div>
 
         <AddUser

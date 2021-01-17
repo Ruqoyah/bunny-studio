@@ -21,7 +21,7 @@ class Login extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('token')) {
-      if(localStorage.getItem('role') === 'super-admin') {
+      if (localStorage.getItem('role') === 'super-admin') {
         this.props.history.push('/users');
       } else {
         this.props.history.push(`/users/${this.state.userId}/tasks`);
@@ -31,13 +31,23 @@ class Login extends Component {
 
   onChange = (event) => {
     const { name, value } = event.target;
-    this.setState((prev) => ({
-      ...prev,
-      user: {
-        ...prev.user,
-        [name]: value
-      }
-    }))
+    if (name === 'email') {
+      this.setState((prev) => ({
+        ...prev,
+        user: {
+          ...prev.user,
+          [name]: value.trim()
+        }
+      }))
+    } else {
+      this.setState((prev) => ({
+        ...prev,
+        user: {
+          ...prev.user,
+          [name]: value
+        }
+      }))
+    }
   }
 
   onSubmit = (event) => {
@@ -63,7 +73,7 @@ class Login extends Component {
       .then((res) => {
         this.setState((prev) => ({
           ...prev,
-          loading: false, 
+          loading: false,
           userId: res.data.userId
         }))
 
@@ -72,7 +82,7 @@ class Login extends Component {
         localStorage.setItem('role', res.data.role);
         localStorage.setItem('userId', res.data.userId);
 
-        if(res.data.role ===  'super-admin') {
+        if (res.data.role === 'super-admin') {
           this.props.history.push('/users')
         } else {
           this.props.history.push(`/users/${res.data.userId}/tasks`)
@@ -129,12 +139,12 @@ class Login extends Component {
         <div className="pt-24 md:pt-32 text-sm md:text-base">
           <form className="m-auto w-3/4 md:w-1/2 xl:w-1/3 shadow-lg bg-white p-6 md:p-10 text-center" onSubmit={this.onSubmit}>
             <h2 className='md:text-lg'>LOGIN</h2>
-            <input 
-              className="p-2 md:p-3 bg-gray-200 w-full mt-2 md:mt-4" 
-              type="text" 
-              placeholder="Email" 
-              name="email" 
-              onChange={this.onChange} 
+            <input
+              className="p-2 md:p-3 bg-gray-200 w-full mt-2 md:mt-4"
+              type="text"
+              placeholder="Email"
+              name="email"
+              onChange={this.onChange}
               onFocus={this.onFocus}
             />
             {validationRes && validationRes.email ? (
@@ -155,22 +165,21 @@ class Login extends Component {
                 {validationRes.password}
               </p>
             ) : null}
-             {error ? (
+            {error ? (
               <p className="text-red-500 text-left text-sm italic mt-2">
                 {error}
               </p>
             ) : null}
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className={
-                `${
-                  loading && "opacity-50 cursor-not-allowed"
+                `${loading && "opacity-50 cursor-not-allowed"
                 } bg-primaryOrange w-full py-2 text-center text-white mt-3 md:text-lg hover:bg-orange-600`}
-              >
-                {
-                  loading ?  <i className="fa fa-spinner fa-pulse"></i> : "LOGIN"
-                }
-              </button>
+            >
+              {
+                loading ? <i className="fa fa-spinner fa-pulse"></i> : "LOGIN"
+              }
+            </button>
           </form>
         </div>
       </div>

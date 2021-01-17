@@ -6,7 +6,8 @@ import {
     validateLoginUser,
     validateSuperAdmin,
     checkUpdateRoleInput,
-    checkUpdateInput
+    checkUpdateInput,
+    validateSuperAdminEditOrDelete
   } from '../middleware/validations';
 import authentication from '../middleware/authentication';
 const app = express.Router();
@@ -42,6 +43,7 @@ app.delete(
     '/api/users/:userId', 
     authentication.authenticate,
     validateSuperAdmin,
+    validateSuperAdminEditOrDelete,
     UserController.deleteUser
 );
 
@@ -53,7 +55,7 @@ app.put(
     '/api/users/:userId',
     authentication.authenticate,
     validateSuperAdmin,
-    checkUpdateInput,
+    validateSuperAdminEditOrDelete,
     UserController.updateUser
 );
 
@@ -66,6 +68,7 @@ app.put(
     authentication.authenticate,
     validateSuperAdmin,
     checkUpdateRoleInput,
+    validateSuperAdminEditOrDelete,
     UserController.updateUserRole
 );
 

@@ -3,6 +3,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import omit from 'object.omit';
+import Sequelize from 'sequelize';
 
 const { Users } = models;
 
@@ -182,6 +183,9 @@ class UserController {
       }
       Users
         .findAndCountAll({
+          where: {id: {
+            [Sequelize.Op.not]: 1
+          }},
           order: [['createdAt', 'DESC']],
           limit,
           offset,
@@ -201,6 +205,9 @@ class UserController {
     } else {
       Users
         .findAll({
+          where: {id: {
+            [Sequelize.Op.not]: 1
+          }},
           order: [['createdAt', 'DESC']],
         })
         .then((users) => {
